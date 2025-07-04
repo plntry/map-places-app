@@ -1,0 +1,12 @@
+{
+  "name": "Римські канікули - Інтерактивний маршрут",
+  "short_name": "Римські канікули",
+  "description": "Відкрийте для себе найкращі пам'ятки Риму з нашим інтерактивним маршрутом",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait-primary",
+  "categories": ["travel", "tourism", "navigation"],
+  "lang": "uk"
+}
