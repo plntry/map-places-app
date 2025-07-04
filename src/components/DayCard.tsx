@@ -1,5 +1,6 @@
 import React from "react";
 import { Calendar, MapPin } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Day } from "../types/trip";
 
 interface DayCardProps {
@@ -9,6 +10,7 @@ interface DayCardProps {
 }
 
 const DayCard: React.FC<DayCardProps> = ({ day, isActive, onClick }) => {
+  const { t } = useTranslation();
   return (
     <div
       className={`p-3 sm:p-4 rounded-xl cursor-pointer transition-all duration-300 ${
@@ -18,7 +20,9 @@ const DayCard: React.FC<DayCardProps> = ({ day, isActive, onClick }) => {
       } flex`}
       role="button"
       tabIndex={0}
-      aria-label={`День ${day.id}: ${day.title}. ${day.activities.length} активностей`}
+      aria-label={`${t("activity.day")} ${day.id}: ${day.title}. ${
+        day.activities.length
+      } ${t("activity.activities")}`}
       aria-pressed={isActive}
       aria-describedby={`day-activities-${day.id}`}
       onClick={onClick}
@@ -41,7 +45,7 @@ const DayCard: React.FC<DayCardProps> = ({ day, isActive, onClick }) => {
             className="font-semibold text-sm sm:text-base mb-1"
             id={`day-title-${day.id}`}
           >
-            День {day.id}
+            {t("activity.day")} {day.id}
           </h3>
           <p
             className={`text-sm sm:text-base leading-tight ${

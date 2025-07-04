@@ -1,0 +1,34 @@
+{
+  "loading": {
+    "app": "Завантаження додатку",
+    "loading": "Завантаження...",
+    "preparing_trip": "Готуємо вашу подорож"
+  },
+  "error": {
+    "loading_trip": "Помилка завантаження даних подорожі"
+  },
+  "actions": {
+    "try_again": "Спробувати знову"
+  },
+  "sidebar": {
+    "navigation": "Бічна панель навігації",
+    "close": "Закрити бічну панель",
+    "days_of_trip": "{{count}} днів подорожі",
+    "route": "Маршрут",
+    "map_language": "Мова карти",
+    "choose_map_language": "Вибір мови карти"
+  },
+  "activity": {
+    "activity": "Активність",
+    "coordinates": "Координати",
+    "latitude": "широта",
+    "longitude": "довгота",
+    "day": "День",
+    "activities": "активностей",
+    "activities_list": "Список активностей"
+  },
+  "map": {
+    "map_with_activities": "Карта Google з позначками активностей",
+    "activities_on_map": "Активності на мапі"
+  }
+}

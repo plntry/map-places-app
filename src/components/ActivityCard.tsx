@@ -1,5 +1,6 @@
 import React from "react";
 import { MapPin } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { Activity } from "../types/trip";
 
 interface ActivityCardProps {
@@ -17,6 +18,7 @@ const ActivityCard: React.FC<ActivityCardProps> = ({
   onHover,
   onSelect,
 }) => {
+  const { t } = useTranslation();
   const isHighlighted = isHovered || isSelected;
 
   return (
@@ -30,7 +32,9 @@ const ActivityCard: React.FC<ActivityCardProps> = ({
       `}
       role="button"
       tabIndex={0}
-      aria-label={`Активність: ${activity.name}. ${activity.description}`}
+      aria-label={`${t("activity.activity")}: ${activity.name}. ${
+        activity.description
+      }`}
       aria-pressed={isSelected}
       aria-describedby={`activity-coords-${activity.id}`}
       onMouseEnter={() => onHover(activity.id)}
@@ -65,9 +69,11 @@ const ActivityCard: React.FC<ActivityCardProps> = ({
         <div
           className="flex items-center text-xs text-gray-500"
           id={`activity-coords-${activity.id}`}
-          aria-label={`Координати: широта ${activity.coords.lat.toFixed(
-            4
-          )}, довгота ${activity.coords.lng.toFixed(4)}`}
+          aria-label={`${t("activity.coordinates")}: ${t(
+            "activity.latitude"
+          )} ${activity.coords.lat.toFixed(4)}, ${t(
+            "activity.longitude"
+          )} ${activity.coords.lng.toFixed(4)}`}
         >
           <MapPin className="w-3 h-3 mr-1 flex-shrink-0" />
           <span className="truncate">

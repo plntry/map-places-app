@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import { Menu } from "lucide-react";
-import { Trip, Day } from "./types/trip";
+import { useTranslation } from "react-i18next";
 import LoadingSpinner from "./components/LoadingSpinner";
 import Sidebar from "./components/Sidebar";
 import MapView from "./components/MapView";
+import { DEFAULT_LANGUAGE } from "./constants/languages";
+import { Trip, Day } from "./types/trip";
 
 function App() {
+  const { t } = useTranslation();
   const [trip, setTrip] = useState<Trip | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeDay, setActiveDay] = useState<Day | null>(null);
@@ -16,7 +19,7 @@ function App() {
   // Read saved language or default to 'uk'
   const [mapLanguage] = useState<string>(() => {
     if (typeof window !== "undefined") {
-      return localStorage.getItem("mapLanguage") || "uk";
+      return localStorage.getItem("mapLanguage") || DEFAULT_LANGUAGE;
     }
     return "uk";
   });
@@ -25,10 +28,7 @@ function App() {
   useEffect(() => {
     const loadTripData = async () => {
       try {
-        // Simulate network delay for better UX
-        await new Promise((resolve) => setTimeout(resolve, 1500));
-
-        const response = await fetch("/mock-trip.json");
+        const response = await fetch(`/mock-trip.${mapLanguage}.json`);
         if (!response.ok) {
           throw new Error("Failed to load trip data");
         }
@@ -48,7 +48,7 @@ function App() {
     };
 
     loadTripData();
-  }, []);
+  }, [mapLanguage]);
 
   const handleDaySelect = (day: Day) => {
     setActiveDay(day);
@@ -79,7 +79,7 @@ function App() {
   };
 
   if (loading) {
-    return <LoadingSpinner />;
+    return <LoadingSpinner message={t("loading.preparing_trip")} />;
   }
 
   if (!trip) {
@@ -87,13 +87,13 @@ function App() {
       <div className="min-h-screen flex items-center justify-center p-4">
         <div className="text-center glass-card p-8 rounded-2xl">
           <p className="text-xl text-gray-800 mb-4">
-            Помилка завантаження даних подорожі
+            {t("error.loading_trip")}
           </p>
           <button
             onClick={() => window.location.reload()}
             className="px-6 py-2 glass-button-neutral text-gray-800 rounded-lg transition-all duration-300"
           >
-            Спробувати знову
+            {t("actions.try_again")}
           </button>
         </div>
       </div>

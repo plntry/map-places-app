@@ -1,0 +1,34 @@
+{
+  "loading": {
+    "app": "Loading app",
+    "loading": "Loading...",
+    "preparing_trip": "Preparing your trip"
+  },
+  "error": {
+    "loading_trip": "Error loading trip data"
+  },
+  "actions": {
+    "try_again": "Try again"
+  },
+  "sidebar": {
+    "navigation": "Sidebar navigation",
+    "close": "Close sidebar",
+    "days_of_trip": "{{count}} days of trip",
+    "route": "Route",
+    "map_language": "Map language",
+    "choose_map_language": "Choose map language"
+  },
+  "activity": {
+    "activity": "Activity",
+    "coordinates": "Coordinates",
+    "latitude": "latitude",
+    "longitude": "longitude",
+    "day": "Day",
+    "activities": "activities",
+    "activities_list": "Activities list"
+  },
+  "map": {
+    "map_with_activities": "Google Map with activities",
+    "activities_on_map": "Activities on map"
+  }
+}

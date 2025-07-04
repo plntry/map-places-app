@@ -1,20 +1,10 @@
 import React from "react";
-import { CalendarDays, MapPin, X, Globe, ChevronDown } from "lucide-react";
-import { Day } from "../types/trip";
+import { CalendarDays, MapPin, X, ChevronDown } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import DayCard from "./DayCard";
 import ActivityCard from "./ActivityCard";
-
-// Language options for Google Maps
-const LANGUAGE_OPTIONS = [
-  { code: "uk", name: "Українська", flag: "🇺🇦" },
-  { code: "en", name: "English", flag: "🇺🇸" },
-  { code: "it", name: "Italiano", flag: "🇮🇹" },
-  { code: "de", name: "Deutsch", flag: "🇩🇪" },
-  { code: "fr", name: "Français", flag: "🇫🇷" },
-  { code: "es", name: "Español", flag: "🇪🇸" },
-  { code: "pl", name: "Polski", flag: "🇵🇱" },
-  { code: "ru", name: "Русский", flag: "🇷🇺" },
-];
+import { LANGUAGE_OPTIONS } from "../constants/languages";
+import { Day } from "../types/trip";
 
 interface SidebarProps {
   tripTitle: string;
@@ -45,6 +35,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   mapLanguage,
   onLanguageChange,
 }) => {
+  const { t } = useTranslation();
   const [showLanguageMenu, setShowLanguageMenu] = React.useState(false);
   const languageMenuRef = React.useRef<HTMLDivElement>(null);
 
@@ -73,7 +64,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       className={`h-screen glass-card border-r border-white/20 overflow-y-auto transition-all duration-300 ${
         isCollapsed ? "opacity-0 pointer-events-none" : "opacity-100"
       }`}
-      aria-label="Бічна панель навігації"
+      aria-label={t("sidebar.navigation")}
       role="complementary"
     >
       <div className="p-4 sm:p-6">
@@ -89,7 +80,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             <button
               onClick={onToggleCollapse}
               className="flex items-center justify-center w-8 h-8 rounded-lg glass-button-neutral ml-2 flex-shrink-0"
-              aria-label="Закрити бічну панель"
+              aria-label={t("sidebar.close")}
               aria-expanded={true}
               aria-controls="sidebar-content"
             >
@@ -102,7 +93,9 @@ const Sidebar: React.FC<SidebarProps> = ({
                 className="w-4 h-4 flex-shrink-0"
                 aria-hidden="true"
               />
-              <span className="text-sm">{days.length} днів подорожі</span>
+              <span className="text-sm">
+                {t("sidebar.days_of_trip", { count: days.length })}
+              </span>
             </div>
 
             {/* Language Selector */}
@@ -114,7 +107,6 @@ const Sidebar: React.FC<SidebarProps> = ({
                 aria-expanded={showLanguageMenu}
                 aria-haspopup="listbox"
               >
-                <Globe className="w-3 h-3" aria-hidden="true" />
                 <span>
                   {LANGUAGE_OPTIONS.find((l) => l.code === mapLanguage)?.flag}
                 </span>
@@ -130,11 +122,11 @@ const Sidebar: React.FC<SidebarProps> = ({
                 <div className="absolute top-full right-0 mt-1 glass-card-neutral rounded-lg shadow-xl border border-white/20 min-w-[180px] z-30">
                   <div className="p-1.5">
                     <div className="text-xs font-medium text-gray-600 px-2 py-1.5 border-b border-white/20">
-                      Мова карти
+                      {t("sidebar.map_language")}
                     </div>
                     <ul
                       role="listbox"
-                      aria-label="Вибір мови карти"
+                      aria-label={t("sidebar.choose_map_language")}
                       className="max-h-48 overflow-y-auto"
                     >
                       {LANGUAGE_OPTIONS.map((lang) => (
@@ -178,7 +170,7 @@ const Sidebar: React.FC<SidebarProps> = ({
               className="text-lg font-semibold text-gray-800 mb-4"
               id="route-heading"
             >
-              Маршрут
+              {t("sidebar.route")}
             </h2>
             <ul className="space-y-3" role="list">
               {days.map((day) => (

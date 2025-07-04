@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
+import LoadingSpinner from "./LoadingSpinner";
 import { Activity } from "../types/trip";
 
 // Hook to detect if sidebar is full width (mobile/small screen)
@@ -34,6 +36,7 @@ const MapView: React.FC<MapViewProps> = ({
   hoveredActivity,
   sidebarOpen = true,
 }) => {
+  const { t } = useTranslation();
   const mapRef = useRef<HTMLDivElement>(null);
   const [mapLoaded, setMapLoaded] = useState(false);
   const [scriptLoaded, setScriptLoaded] = useState(false);
@@ -48,11 +51,40 @@ const MapView: React.FC<MapViewProps> = ({
   useEffect(() => {
     if (!mapRef.current) return;
 
+    // If the script for the current language is already present, do nothing
+    const existingScript = document.getElementById("google-maps-script");
+    if (existingScript) {
+      // If the script src matches the current language, do nothing
+      if (
+        existingScript.getAttribute("src")?.includes(`language=${mapLanguage}`)
+      ) {
+        if (window.google?.maps) {
+          setScriptLoaded(true);
+          setMapLoaded(true);
+        } else {
+          existingScript.addEventListener("load", () => {
+            setScriptLoaded(true);
+            setMapLoaded(true);
+          });
+        }
+        return;
+      } else {
+        // If the script is for a different language, remove it and reload the page
+        existingScript.remove();
+        // Optionally, clear window.google
+        // @ts-expect-error - window.google is not defined in the global scope
+        if (window.google) window.google = undefined;
+        // After removing, reload the page to ensure a clean state
+        window.location.reload();
+        return;
+      }
+    }
+
+    // Add the new script for the current language
     const script = document.createElement("script");
     script.id = "google-maps-script";
     script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBsKdN4dwUx5RjFdqTPaSEStxqaCQR7qck&libraries=marker&language=${mapLanguage}`;
     script.async = true;
-    script.defer = true;
 
     script.onload = () => {
       setScriptLoaded(true);
@@ -61,10 +93,8 @@ const MapView: React.FC<MapViewProps> = ({
     script.onerror = () => console.error("Failed to load Google Maps script");
 
     document.head.appendChild(script);
-    return () => {
-      // cleanup script if unmount
-      document.getElementById("google-maps-script")?.remove();
-    };
+
+    // No cleanup needed unless you want to force reload on language change
   }, [mapLanguage]);
 
   // Initialize map when script is loaded and activities change
@@ -213,24 +243,13 @@ const MapView: React.FC<MapViewProps> = ({
         {announceText}
       </div>
 
-      {!mapLoaded && (
-        <div
-          className="absolute inset-0 flex items-center justify-center"
-          role="status"
-          aria-label="Завантаження карти"
-        >
-          <div className="text-center glass-card p-6 rounded-xl">
-            <div className="animate-spin rounded-full h-8 w-8 border-2 border-white/30 border-t-white mx-auto mb-3"></div>
-            <p className="text-sm text-white">Завантаження карти...</p>
-          </div>
-        </div>
-      )}
+      {!mapLoaded && <LoadingSpinner />}
       <div
         ref={mapRef}
         className="w-full h-full"
         style={{ opacity: mapLoaded ? 1 : 0 }}
         role="application"
-        aria-label="Карта Google з позначками активностей"
+        aria-label={t("map.map_with_activities")}
         tabIndex={mapLoaded ? 0 : -1}
       />
 
@@ -245,7 +264,7 @@ const MapView: React.FC<MapViewProps> = ({
             className="font-semibold mb-2 text-sm sm:text-base"
             id="map-activities-heading"
           >
-            Активності на карті
+            {t("map.activities_on_map")}
           </h3>
           <ul className="space-y-2" role="list">
             {activities.map((activity, index) => (
@@ -258,7 +277,9 @@ const MapView: React.FC<MapViewProps> = ({
                 }`}
                 role="button"
                 tabIndex={0}
-                aria-label={`Активність ${index + 1}: ${activity.name}`}
+                aria-label={`${t("activity.activity")} ${index + 1}: ${
+                  activity.name
+                }`}
                 aria-pressed={selectedActivity === activity.id}
                 onClick={() => onActivitySelect(activity.id)}
                 onKeyDown={(e) => {
@@ -271,7 +292,7 @@ const MapView: React.FC<MapViewProps> = ({
                 onMouseLeave={() => onActivityHover(null)}
               >
                 <div
-                  className={`w-4 h-4 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0 border-2 ${
+                  className={`size-5 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0 border-2 ${
                     selectedActivity === activity.id
                       ? "bg-orange-500 border-orange-600"
                       : "bg-blue-500 border-blue-600"
