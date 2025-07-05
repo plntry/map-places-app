@@ -10,47 +10,44 @@ export function useMapCentering({
   mapInstanceRef,
   activities,
 }: UseMapCenteringProps) {
-  // Function to center map on all activities
   const centerOnActivities = useCallback(() => {
-    if (!mapInstanceRef.current || activities.length === 0) return;
+    const map = mapInstanceRef.current;
+    if (!map || activities.length === 0) return;
 
     if (activities.length === 1) {
-      // Single activity - center on it with zoom
-      const activity = activities[0];
-      mapInstanceRef.current.setCenter({
-        lat: activity.coords.lat,
-        lng: activity.coords.lng,
-      });
-      mapInstanceRef.current.setZoom(16);
+      // Single location – center and fixed zoom
+      const { lat, lng } = activities[0].coords;
+      map.setCenter({ lat, lng });
+      map.setZoom(16);
     } else {
-      // Multiple activities - fit bounds
+      // Multiple locations – fit bounds with padding
       const bounds = new window.google.maps.LatLngBounds();
-      activities.forEach((activity) => {
-        bounds.extend({ lat: activity.coords.lat, lng: activity.coords.lng });
+      activities.forEach(({ coords }) => {
+        bounds.extend({ lat: coords.lat, lng: coords.lng });
+      });
+      map.fitBounds(bounds, { top: 60, right: 40, bottom: 60, left: 40 });
+
+      // All screens: limit excessive zoom
+      window.google.maps.event.addListenerOnce(map, "bounds_changed", () => {
+        const zoom = map.getZoom()!;
+        const MAX_ZOOM = 15;
+        if (zoom > MAX_ZOOM) map.setZoom(MAX_ZOOM);
       });
 
-      // Add some padding to the bounds
-      mapInstanceRef.current.fitBounds(bounds);
-
-      // Ensure zoom level is reasonable (not too zoomed out)
-      window.google.maps.event.addListenerOnce(
-        mapInstanceRef.current,
-        "bounds_changed",
-        () => {
-          if (mapInstanceRef.current!.getZoom()! > 15) {
-            mapInstanceRef.current!.setZoom(15);
-          }
-        }
-      );
+      // Mobile only: prevent zooming out too far
+      if (window.innerWidth < 768) {
+        window.google.maps.event.addListenerOnce(map, "idle", () => {
+          const zoom = map.getZoom()!;
+          const MIN_ZOOM = 15;
+          if (zoom < MIN_ZOOM) map.setZoom(MIN_ZOOM);
+        });
+      }
     }
   }, [mapInstanceRef, activities]);
 
-  // Center on activities when they change (new day selected)
   useEffect(() => {
-    if (mapInstanceRef.current && activities.length > 0) {
-      centerOnActivities();
-    }
-  }, [activities, centerOnActivities, mapInstanceRef]);
+    centerOnActivities();
+  }, [activities, centerOnActivities]);
 
   return { centerOnActivities };
 }

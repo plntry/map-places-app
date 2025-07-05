@@ -22,7 +22,7 @@ const RouteInfo: React.FC<RouteInfoProps> = ({
   return (
     <section className="mb-6 sm:mb-8" aria-labelledby="route-info-heading">
       <RouteInfoHeader />
-      <div className="glass-card-neutral rounded-lg p-4 flex flex-col items-center">
+      <div className="glass-card-neutral rounded-xl p-4 flex flex-col items-center">
         {loading ? (
           <RouteLoadingState />
         ) : distance && duration ? (

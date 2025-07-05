@@ -24,7 +24,7 @@ const WeatherAdvice: React.FC<WeatherAdviceProps> = ({ advice, t }) => {
     >
       <div className="flex items-center gap-2">
         <span className="text-lg">{advice.icon}</span>
-        <span>{t(`weather.advice.${type}`)}</span>
+        <span className="text-sm">{t(`weather.advice.${type}`)}</span>
       </div>
     </div>
   );

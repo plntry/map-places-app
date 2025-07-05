@@ -42,7 +42,7 @@ const WeatherCard: React.FC = () => {
   }
 
   return (
-    <div className="glass-card rounded-xl p-4 mb-6">
+    <div className="glass-card-neutral rounded-xl p-4 mb-6">
       <WeatherHeader
         icon={getWeatherIcon(dayWeather.icon)}
         description={dayWeather.description}
