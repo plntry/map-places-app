@@ -5,7 +5,7 @@ import {
   getWeatherAdvice,
   getWeatherForecast,
 } from "../services/weatherService";
-import type { WeatherAdvice, WeatherData } from "../services/weatherService";
+import type { WeatherAdvice, WeatherData } from "@/types/Weather";
 
 interface TripContextType {
   // Trip data

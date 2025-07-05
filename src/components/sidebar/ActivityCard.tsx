@@ -11,7 +11,7 @@ interface ActivityCardProps {
   onSelect: (activityId: number | null) => void;
 }
 
-export const ActivityCard: React.FC<ActivityCardProps> = ({
+const ActivityCard: React.FC<ActivityCardProps> = ({
   activity,
   isHovered,
   isSelected,
@@ -26,7 +26,7 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
       className={`glass-card w-full flex flex-col rounded-xl overflow-hidden transition-all duration-300 cursor-pointer
         ${
           isHighlighted
-            ? "glass-selected !ring-4 !ring-orange-400/70 !shadow-lg"
+            ? "!glass-selected !ring-4 !ring-orange-400/70 !shadow-lg"
             : ""
         }
       `}
@@ -84,3 +84,5 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({
     </div>
   );
 };
+
+export default ActivityCard;

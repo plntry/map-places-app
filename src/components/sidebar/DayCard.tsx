@@ -9,15 +9,15 @@ interface DayCardProps {
   onClick: () => void;
 }
 
-export const DayCard: React.FC<DayCardProps> = ({ day, isActive, onClick }) => {
+const DayCard: React.FC<DayCardProps> = ({ day, isActive, onClick }) => {
   const { t } = useTranslation();
 
   return (
     <div
-      className={`p-3 sm:p-4 rounded-xl cursor-pointer transition-all duration-300 ${
+      className={`!glass-card p-3 sm:p-4 rounded-xl cursor-pointer transition-all duration-300 ${
         isActive
-          ? "glass-selected text-gray-800 !ring-4 !ring-orange-400/70 !shadow-lg transform"
-          : "glass-button-neutral text-gray-800 hover:text-gray-800 hover:shadow-md"
+          ? "!glass-selected text-gray-800 !ring-4 !ring-orange-400/70 !shadow-lg transform"
+          : "glass-button-neutral text-gray-800 hover:!glass-selected hover:!ring-4 hover:!ring-orange-400/70 hover:!shadow-lg"
       } flex`}
       role="button"
       tabIndex={0}
@@ -79,3 +79,5 @@ export const DayCard: React.FC<DayCardProps> = ({ day, isActive, onClick }) => {
     </div>
   );
 };
+
+export default DayCard;

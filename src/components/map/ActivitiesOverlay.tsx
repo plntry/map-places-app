@@ -1,6 +1,8 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { Dot } from "../Dot";
 import { Activity } from "@/types/Trip";
+import { getMarkerClasses } from "@/utils/styles";
 
 interface MapActivitiesOverlayProps {
   activities: Activity[];
@@ -9,7 +11,7 @@ interface MapActivitiesOverlayProps {
   onActivityHover: (id: number | null) => void;
 }
 
-export const ActivitiesOverlay: React.FC<MapActivitiesOverlayProps> = ({
+const ActivitiesOverlay: React.FC<MapActivitiesOverlayProps> = ({
   activities,
   selectedActivity,
   onActivitySelect,
@@ -42,18 +44,6 @@ export const ActivitiesOverlay: React.FC<MapActivitiesOverlayProps> = ({
     return `${baseClasses} ${selectedClasses}`;
   };
 
-  const getMarkerClasses = (activityId: number) => {
-    const isSelected = selectedActivity === activityId;
-    const baseClasses =
-      "size-5 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0 border-2";
-
-    if (isSelected) {
-      return `${baseClasses} bg-orange-500 border-orange-600 border-orange-700`;
-    }
-
-    return `${baseClasses} bg-blue-500 border-blue-600`;
-  };
-
   return (
     <aside
       className="absolute bottom-4 left-4 glass-card rounded-xl p-3 sm:p-4 max-w-xs sm:max-w-sm z-10"
@@ -83,9 +73,10 @@ export const ActivitiesOverlay: React.FC<MapActivitiesOverlayProps> = ({
             onMouseEnter={() => onActivityHover(activity.id)}
             onMouseLeave={() => onActivityHover(null)}
           >
-            <div className={getMarkerClasses(activity.id)} aria-hidden="true">
-              {index + 1}
-            </div>
+            <Dot
+              number={index + 1}
+              className={getMarkerClasses(selectedActivity === activity.id)}
+            />
             <span className="truncate">{activity.name}</span>
           </li>
         ))}
@@ -93,3 +84,5 @@ export const ActivitiesOverlay: React.FC<MapActivitiesOverlayProps> = ({
     </aside>
   );
 };
+
+export default ActivitiesOverlay;

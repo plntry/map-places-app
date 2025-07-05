@@ -1,16 +1,28 @@
-import { useRef, useEffect } from "react";
+import { useEffect } from "react";
 
-export function useMapInstance(scriptLoaded: boolean) {
-  const mapRef = useRef<HTMLDivElement>(null);
-  const mapInstanceRef = useRef<google.maps.Map | null>(null);
-
+export function useMapInstance(
+  mapRef: React.MutableRefObject<HTMLDivElement | null>,
+  mapInstanceRef: React.MutableRefObject<google.maps.Map | null>,
+  mapLoaded: boolean,
+  activities: { coords: { lat: number; lng: number } }[]
+) {
   useEffect(() => {
-    if (!scriptLoaded || !mapRef.current || !window.google?.maps) return;
-
-    if (!mapInstanceRef.current) {
+    if (mapLoaded && mapRef.current && !mapInstanceRef.current) {
+      let center = { lat: 41.9028, lng: 12.4964 }; // Default (Rome)
+      if (activities.length > 0) {
+        // Compute average center of activities
+        const avg = activities.reduce(
+          (acc, a) => ({
+            lat: acc.lat + a.coords.lat / activities.length,
+            lng: acc.lng + a.coords.lng / activities.length,
+          }),
+          { lat: 0, lng: 0 }
+        );
+        center = avg;
+      }
       mapInstanceRef.current = new window.google.maps.Map(mapRef.current, {
-        center: { lat: 41.9028, lng: 12.4964 },
-        zoom: 13,
+        center,
+        zoom: 14,
         styles: [
           {
             featureType: "poi",
@@ -25,7 +37,5 @@ export function useMapInstance(scriptLoaded: boolean) {
         ],
       });
     }
-  }, [scriptLoaded]);
-
-  return { mapRef, mapInstanceRef };
+  }, [mapLoaded, mapRef, mapInstanceRef, activities]);
 }

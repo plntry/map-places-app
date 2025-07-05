@@ -41,5 +41,17 @@
       "wind": "Vento forte — fai attenzione",
       "good": "Tempo perfetto per le escursioni"
     }
+  },
+  "routeInfo": {
+    "title": "Percorso del giorno",
+    "total_distance": "Distanza totale",
+    "travel_time": "Tempo di viaggio",
+    "steps_between_locations": "Passi tra le località:",
+    "info_box": "Il percorso è calcolato per un viaggio in auto. Considera il tempo per ogni località.",
+    "not_found": "Percorso non trovato",
+    "calculating": "Calcolo del percorso…",
+    "meters": "m",
+    "kilometers": "km",
+    "minutes": "min"
   }
 }

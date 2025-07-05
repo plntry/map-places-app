@@ -1,15 +1,20 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import { ActivitiesOverlay } from "@/components/mapComps";
+import ActivitiesOverlay from "./ActivitiesOverlay";
 import useIsSidebarFullWidth from "@/hooks/useIsSidebarFullWidth";
 import { useGoogleMapsScript } from "@/hooks/useGoogleMapsScript";
 import { useMapInstance } from "@/hooks/useMapInstance";
 import { useMapMarkers } from "@/hooks/useMapMarkers";
 import { useMapCentering } from "@/hooks/useMapCentering";
 import { useTrip } from "@/hooks/useTrip";
+import { useOSRMRoute } from "@/hooks/useOSRMRoute";
 
-const MapView: React.FC = () => {
+interface MapViewProps {
+  mapInstanceRef: React.RefObject<google.maps.Map | null>;
+}
+
+const MapView: React.FC<MapViewProps> = ({ mapInstanceRef }) => {
   const { t } = useTranslation();
   const {
     activeDay,
@@ -24,8 +29,16 @@ const MapView: React.FC = () => {
   const [announceText, setAnnounceText] = useState<string>("");
 
   const isSidebarFullWidth = useIsSidebarFullWidth(sidebarOpen);
-  const { scriptLoaded, mapLoaded } = useGoogleMapsScript(mapLanguage);
-  const { mapRef, mapInstanceRef } = useMapInstance(scriptLoaded);
+  const { mapLoaded } = useGoogleMapsScript(mapLanguage);
+  const mapRef = React.useRef<HTMLDivElement>(null);
+
+  // Initialize the map instance
+  useMapInstance(
+    mapRef,
+    mapInstanceRef,
+    mapLoaded,
+    activeDay?.activities || []
+  );
 
   // Use the centering hook
   useMapCentering({ mapInstanceRef, activities: activeDay?.activities || [] });
@@ -50,6 +63,13 @@ const MapView: React.FC = () => {
     hoveredActivity,
     onActivitySelect: handleActivitySelect,
     onActivityHover: setHoveredActivity,
+  });
+
+  // Draw route using OSRM
+  useOSRMRoute({
+    mapInstanceRef,
+    activities: activeDay?.activities || [],
+    enabled: mapLoaded && !!mapInstanceRef.current,
   });
 
   const shouldShowOverlay =

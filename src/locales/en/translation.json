@@ -41,5 +41,17 @@
       "wind": "Strong wind — be careful",
       "good": "Perfect weather for excursions"
     }
+  },
+  "routeInfo": {
+    "title": "Day route",
+    "total_distance": "Total distance",
+    "travel_time": "Travel time",
+    "steps_between_locations": "Steps between locations:",
+    "info_box": "The route is calculated for a car trip. Consider the time for each location.",
+    "not_found": "Route not found",
+    "calculating": "Calculating route…",
+    "meters": "m",
+    "kilometers": "km",
+    "minutes": "min"
   }
 }

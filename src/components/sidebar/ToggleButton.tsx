@@ -9,7 +9,7 @@ interface ToggleButtonProps {
   className?: string;
 }
 
-export const ToggleButton: React.FC<ToggleButtonProps> = ({
+const ToggleButton: React.FC<ToggleButtonProps> = ({
   variant,
   onClick,
   ariaControls,
@@ -38,3 +38,5 @@ export const ToggleButton: React.FC<ToggleButtonProps> = ({
     </button>
   );
 };
+
+export default ToggleButton;
