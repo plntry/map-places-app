@@ -23,7 +23,7 @@ const ActivityCard: React.FC<ActivityCardProps> = ({
 
   return (
     <div
-      className={`glass-card w-full flex flex-col rounded-xl overflow-hidden transition-all duration-300 cursor-pointer
+      className={`glass-card-neutral w-full flex flex-col rounded-xl overflow-hidden transition-all duration-300 cursor-pointer
         ${
           isHighlighted
             ? "!glass-selected !ring-4 !ring-orange-400/70 !shadow-lg"

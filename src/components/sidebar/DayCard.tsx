@@ -14,7 +14,7 @@ const DayCard: React.FC<DayCardProps> = ({ day, isActive, onClick }) => {
 
   return (
     <div
-      className={`!glass-card p-3 sm:p-4 rounded-xl cursor-pointer transition-all duration-300 ${
+      className={`!glass-card-neutral p-3 sm:p-4 rounded-xl cursor-pointer transition-all duration-300 ${
         isActive
           ? "!glass-selected text-gray-800 !ring-4 !ring-orange-400/70 !shadow-lg transform"
           : "glass-button-neutral text-gray-800 hover:!glass-selected hover:!ring-4 hover:!ring-orange-400/70 hover:!shadow-lg"
