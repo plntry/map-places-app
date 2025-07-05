@@ -1,7 +1,7 @@
 import React from "react";
 import { Calendar, MapPin } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { Day } from "../types/trip";
+import { Day } from "@/types/Trip";
 
 interface DayCardProps {
   day: Day;
@@ -9,8 +9,9 @@ interface DayCardProps {
   onClick: () => void;
 }
 
-const DayCard: React.FC<DayCardProps> = ({ day, isActive, onClick }) => {
+export const DayCard: React.FC<DayCardProps> = ({ day, isActive, onClick }) => {
   const { t } = useTranslation();
+
   return (
     <div
       className={`p-3 sm:p-4 rounded-xl cursor-pointer transition-all duration-300 ${
@@ -78,5 +79,3 @@ const DayCard: React.FC<DayCardProps> = ({ day, isActive, onClick }) => {
     </div>
   );
 };
-
-export default DayCard;

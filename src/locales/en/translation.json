@@ -30,5 +30,16 @@
   "map": {
     "map_with_activities": "Google Map with activities",
     "activities_on_map": "Activities on map"
+  },
+  "weather": {
+    "forecast": "Weather Forecast",
+    "unavailable": "Weather forecast unavailable",
+    "advice": {
+      "rain": "Rain forecast — take an umbrella",
+      "heat": "Temperature above 30°C — choose morning excursions",
+      "cold": "Cold weather — dress warmer",
+      "wind": "Strong wind — be careful",
+      "good": "Perfect weather for excursions"
+    }
   }
 }

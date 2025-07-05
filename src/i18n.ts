@@ -1,8 +1,8 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
-import resources from "./types/translation/resources";
-import { DEFAULT_LANGUAGE, defaultNS } from "./constants/languages";
+import resources from "@/types/translation/resources";
+import { DEFAULT_LANGUAGE, defaultNS } from "@/constants/languages";
 
 if (!localStorage.getItem("mapLanguage")) {
   localStorage.setItem("mapLanguage", DEFAULT_LANGUAGE);

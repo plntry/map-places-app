@@ -1,7 +1,7 @@
 import React from "react";
 import { MapPin } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { Activity } from "../types/trip";
+import { Activity } from "@/types/Trip";
 
 interface ActivityCardProps {
   activity: Activity;
@@ -11,7 +11,7 @@ interface ActivityCardProps {
   onSelect: (activityId: number | null) => void;
 }
 
-const ActivityCard: React.FC<ActivityCardProps> = ({
+export const ActivityCard: React.FC<ActivityCardProps> = ({
   activity,
   isHovered,
   isSelected,
@@ -84,5 +84,3 @@ const ActivityCard: React.FC<ActivityCardProps> = ({
     </div>
   );
 };
-
-export default ActivityCard;

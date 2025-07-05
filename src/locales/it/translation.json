@@ -1,0 +1,45 @@
+{
+  "loading": {
+    "app": "Caricamento dell'app",
+    "loading": "Caricamento...",
+    "preparing_trip": "Preparazione del tuo viaggio"
+  },
+  "error": {
+    "loading_trip": "Errore nel caricamento dei dati del viaggio"
+  },
+  "actions": {
+    "try_again": "Riprova"
+  },
+  "sidebar": {
+    "navigation": "Navigazione barra laterale",
+    "close": "Chiudi barra laterale",
+    "days_of_trip": "{{count}} giorni di viaggio",
+    "route": "Percorso",
+    "map_language": "Lingua della mappa",
+    "choose_map_language": "Scegli lingua della mappa"
+  },
+  "activity": {
+    "activity": "Attività",
+    "coordinates": "Coordinate",
+    "latitude": "latitudine",
+    "longitude": "longitudine",
+    "day": "Giorno",
+    "activities": "attività",
+    "activities_list": "Lista delle attività"
+  },
+  "map": {
+    "map_with_activities": "Mappa Google con attività",
+    "activities_on_map": "Attività sulla mappa"
+  },
+  "weather": {
+    "forecast": "Previsioni Meteo",
+    "unavailable": "Previsioni meteo non disponibili",
+    "advice": {
+      "rain": "Previsioni di pioggia — porta un ombrello",
+      "heat": "Temperatura sopra 30°C — scegli escursioni mattutine",
+      "cold": "Tempo freddo — vestiti più caldo",
+      "wind": "Vento forte — fai attenzione",
+      "good": "Tempo perfetto per le escursioni"
+    }
+  }
+}
