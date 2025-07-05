@@ -116,7 +116,9 @@ export const TripProvider: React.FC<TripProviderProps> = ({ children }) => {
         setLoading(true);
         setError(null);
 
-        const response = await fetch(`/mock-trip.${mapLanguage}.json`);
+        const response = await fetch(
+          `${import.meta.env.BASE_URL}mock-trip.${mapLanguage}.json`
+        );
         if (!response.ok) {
           throw new Error("Failed to load trip data");
         }
